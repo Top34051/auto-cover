@@ -24,9 +24,9 @@ def load_wav_audio(audio_dir):
             mel = audio.audio_to_mel(os.path.join(cls_dir, fname))
             print('\tconvert to mel: done!')
 
-            # get samples from mel-spectrogram of width 256
-            k = mel.shape[1] // 30
-            mels = audio.mel_sample(mel, width=256, k=k)
+            # get samples from mel-spectrogram of width 3 * 128 = 384
+            k = mel.shape[1] // 25
+            mels = audio.mel_sample(mel, width=384, k=k)
             print('\tsample mels: done!')
 
             # append samples
