@@ -1,0 +1,10 @@
+{
+    "resume": "",
+    "optimizers": {
+        "gen_lr": 0.0001,
+        "dis_lr": 0.00005,
+        "beta1": 0.9,
+        "beta2": 0.999
+    },
+    "epoch_save": 10
+}
