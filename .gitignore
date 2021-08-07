@@ -133,3 +133,6 @@ data/audio/
 data/music/
 data/train/
 data/test/
+
+# Checkpoints
+checkpoints/

@@ -1,10 +1,18 @@
 {
-    "resume": "",
+    "class_a": "city-pop",
+    "class_b": "jazz",
     "optimizers": {
         "gen_lr": 0.0001,
         "dis_lr": 0.00005,
         "beta1": 0.9,
         "beta2": 0.999
     },
-    "epoch_save": 10
+    "hparam": {
+        "lambda_adv": 1,
+        "lambda_embed": 10,
+        "lambda_margin": 10
+    },
+    "gen_freq": 5,
+    "resume": "",
+    "epoch_save": 1
 }

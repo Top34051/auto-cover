@@ -9,7 +9,7 @@ class MusicDataset(Dataset):
 
     def __init__(self, path):
         super().__init__()
-        self.data = np.load(path)
+        self.data = np.expand_dims(np.load(path), 1)
 
     def __len__(self):
         return len(self.data)
