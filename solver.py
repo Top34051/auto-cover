@@ -122,7 +122,7 @@ class Solver():
         loss_gen.backward(retain_graph=True)
         self.gen_opt.step()
 
-        return loss_gen.item()
+        return loss_gen.item(), loss_adv_gen.item(), loss_embed.item(), loss_margin.item()
 
     def train(self, num_epoch=3000):
 
@@ -132,6 +132,9 @@ class Solver():
             print('Epoch {}'.format(self.epoch))
 
             losses_gen = []
+            losses_gen_adv = []
+            losses_embed = []
+            losses_margin = []
             losses_dis = []
 
             # loop batch
@@ -144,16 +147,31 @@ class Solver():
 
                 # train generator
                 loss_gen = None
+                loss_gen_adv = None
+                loss_embed = None
+                loss_margin = None
                 if idx % self.gen_freq == 0:
-                    loss_gen = self.train_gen(a, b)
+                    loss_gen, loss_gen_adv, loss_embed, loss_margin = self.train_gen(a, b)
 
                 losses_gen.append(loss_gen)
                 losses_dis.append(loss_dis)
+                losses_gen_adv.append(loss_gen_adv)
+                losses_embed.append(loss_embed)
+                losses_margin.append(loss_margin)
 
             losses_gen = [x for x in losses_gen if x is not None]
             losses_dis = [x for x in losses_dis if x is not None]
+            losses_gen_adv = [x for x in losses_gen_adv if x is not None]
+            losses_embed = [x for x in losses_embed if x is not None]
+            losses_margin = [x for x in losses_margin if x is not None]
             self.losses['gen'].append(np.mean(losses_gen))
             self.losses['dis'].append(np.mean(losses_dis))
+
+            print('  gen loss:', np.mean(losses_gen))
+            print('      adv loss:   ', np.mean(losses_gen_adv))
+            print('      embed loss: ', np.mean(losses_embed))
+            print('      margin loss:', np.mean(losses_margin))
+            print('  dis loss:', np.mean(losses_dis))
 
             # save checkpoint
             if self.epoch % self.epoch_save == 0:
